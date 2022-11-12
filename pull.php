@@ -10,6 +10,7 @@ function command($command, $title = false)
 
 $composerHome = __DIR__ . "/../buzzz_forms_vendor/";
 
+command("git fetch origin");
 command("git pull origin main");
 command("git status");
 command("export COMPOSER_HOME=$composerHome && composer update", "composer update");
