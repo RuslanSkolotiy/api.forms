@@ -1,7 +1,15 @@
 <?php
+function command($command, $title = false)
+{
+    echo "<pre>";
+    echo "<b>" . ($title ?: $command) . "</b>" . PHP_EOL;
+    system($command . ' 2>&1');
+    echo PHP_EOL;
+    echo "</pre>";
+}
+
 $composerHome = __DIR__ . "/../buzzz_forms_vendor/";
-echo "<pre>";
-system("git pull origin main 2>&1");
-system("git status 2>&1");
-system("export COMPOSER_HOME=$composerHome && composer update 2>&1");
-echo "</pre>";
+
+command("git pull origin main");
+command("git status");
+command("export COMPOSER_HOME=$composerHome && composer update", "composer update");
