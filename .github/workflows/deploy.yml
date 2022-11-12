@@ -1,0 +1,21 @@
+name: Deployment Workflow
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: buzzz.ru
+          username: bitrix
+          key: ${{ secrets.BUZZZ_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ext_www/api.forms.buzzz.ru/
+            git pull origin main
+            git status
