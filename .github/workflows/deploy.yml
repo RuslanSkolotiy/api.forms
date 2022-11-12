@@ -16,6 +16,7 @@ jobs:
           key: ${{ secrets.BUZZZ_PRIVATE_KEY }}
           port: 22
           script: |
+            echo "--GIT PULL--" 
             cd ext_www/api.forms.buzzz.ru/
             git pull origin main
             git status
