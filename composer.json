@@ -1,0 +1,17 @@
+{
+  "minimum-stability": "stable",
+  "config": {
+    "vendor-dir": "../buzzz_forms_vendor",
+    "allow-plugins": {
+      "kylekatarnls/update-helper": false
+    }
+  },
+  "require": {
+    "firebase/php-jwt": "^6.2",
+    "ramsey/uuid": "^4.3",
+    "pecee/simple-router": "4.3.7.2"
+  },
+  "autoload": {
+    "psr-4": {"Buzzz\\": "src/"}
+  }
+}
