@@ -1,10 +1,10 @@
 Options -Indexes 
 ErrorDocument 404 /404.php
 
-php_flag display_startup_errors off
-php_flag display_errors off
-php_flag html_errors off
-php_flag log_errors on
+#php_flag display_startup_errors
+#php_flag display_errors on
+#php_flag html_errors on
+#php_flag log_errors on
 
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
