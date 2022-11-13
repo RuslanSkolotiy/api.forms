@@ -2,7 +2,9 @@
 
 namespace Buzzz\App;
 
+use Buzzz\Controller\Published;
 use Buzzz\Controller\Question;
+use Buzzz\Controller\QuestionType;
 use Pecee\SimpleRouter\SimpleRouter;
 use Pecee\Http\Request;
 use \Buzzz\Controller\Poll;
@@ -29,6 +31,17 @@ class Router
             SimpleRouter::post('/', [Question::class, 'add']);
             SimpleRouter::delete('/{id}', [Question::class, 'delete']);
             SimpleRouter::post('/{id}', [Question::class, 'update']);
+        });
+
+        // Типы вопросов
+        SimpleRouter::group(['prefix' => '/api/v1/questionType', 'middleware' => AuthMiddleware::class], function () {
+            SimpleRouter::get('/', [QuestionType::class, 'getList']);
+            SimpleRouter::get('/{id}', [QuestionType::class, 'get']);
+        });
+
+        // Опубликованный опрос
+        SimpleRouter::group(['prefix' => '/api/v1/published/{id}/'], function () {
+            SimpleRouter::get('', [Published::class, 'getPoll']);
         });
 
         // Обработка ошибок
