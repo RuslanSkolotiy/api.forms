@@ -16,6 +16,11 @@ class Published
         if (!$poll['published']) {
             return new Response(null, 'Опрос не опубликован');
         }
-        return new Response($poll, 'Опрос найден');
+
+        $data = [
+            'poll' => $poll,
+            'questions' => \Buzzz\Model\Question::getList($poll['id'])
+        ];
+        return new Response($data, 'Опрос найден');
     }
 }
