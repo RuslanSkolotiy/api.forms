@@ -25,7 +25,7 @@ class Poll
 
     public function add()
     {
-        $name = Request::input('name', null, 'post');
+        $name = Request::input('name', 'Новый опрос', 'post');
         $data = [
             'name' => $name,
         ];
