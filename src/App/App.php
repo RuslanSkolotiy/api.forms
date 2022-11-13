@@ -15,6 +15,9 @@ class App
         $dotenv->load();
         // Load configuration
         $settings = require_once self::$DOCUMENT_ROOT . '/bitrix/.settings.php';
+        // Init CORS
+        $corsDomain = $_ENV['CORS_DOMAIN'];
+        Cors::init([$corsDomain]);
         // Start session
         session_start();
         // Init database
