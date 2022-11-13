@@ -58,12 +58,10 @@ class Router
             // Page not found
             case 404:
                 new Response(null, 'Page not found', 404);
+                break;
             // Forbidden
             case 403:
                 new Response(null, 'Forbidden', 403);
-            // Unauthorized
-            case 401:
-                new Response(null, 'Unauthorized', 401);
         }
     }
 }
