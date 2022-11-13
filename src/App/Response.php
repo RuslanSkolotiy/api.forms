@@ -12,7 +12,7 @@ class Response
         return SimpleRouter::response()->json(
             [
                 'content' => $content,
-                '$message' => $code,
+                'status' => $code,
                 'message' => $message,
             ]
         );
