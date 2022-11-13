@@ -9,7 +9,8 @@
   "require": {
     "firebase/php-jwt": "^6.2",
     "ramsey/uuid": "^4.3",
-    "pecee/simple-router": "4.3.7.2"
+    "pecee/simple-router": "4.3.7.2",
+    "vlucas/phpdotenv": "^5.5"
   },
   "autoload": {
     "psr-4": {"Buzzz\\": "src/"}

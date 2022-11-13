@@ -9,10 +9,11 @@ class Poll
 {
     const table_name = 'poll';
 
-    public static function getList(): array
+    public static function getList($userId): array
     {
         $data = [];
-        $stmt = App::$DB->query("SELECT * FROM " . self::table_name);
+        $stmt = App::$DB->prepare("SELECT * FROM " . self::table_name . " WHERE user_id = :user_id");
+        $stmt->execute(['user_id' => $userId]);
         while ($row = $stmt->fetch()) {
             $data[] = [
                 'uuid' => $row['uuid'],
@@ -24,10 +25,10 @@ class Poll
         return $data;
     }
 
-    public static function get($uuid)
+    public static function get($uuid, $userId)
     {
-        $stmt = App::$DB->prepare("SELECT * FROM " . self::table_name . " WHERE uuid = :uuid");
-        $stmt->execute(['uuid' => $uuid]);
+        $stmt = App::$DB->prepare("SELECT * FROM " . self::table_name . " WHERE uuid = :uuid AND user_id = :user_id");
+        $stmt->execute(['uuid' => $uuid, 'user_id' => $userId]);
         if ($row = $stmt->fetch()) {
             return [
                 'uuid' => $row['uuid'],
@@ -54,13 +55,30 @@ class Poll
         return false;
     }
 
-    public static function add($user_id, $data)
+    public static function getByUUID($uuid)
+    {
+        $stmt = App::$DB->prepare("SELECT * FROM " . self::table_name . " WHERE uuid = :uuid");
+        $stmt->execute(['uuid' => $uuid]);
+        if ($row = $stmt->fetch()) {
+            return [
+                'id' => $row['id'],
+                'uuid' => $row['uuid'],
+                'name' => $row['name'],
+                'user_id' => $row['user_id'],
+                'description' => $row['description'],
+                'published' => $row['published'],
+            ];
+        }
+        return false;
+    }
+
+    public static function add($userId, $data)
     {
         $uuid = Uuid::uuid4();
         $stmt = App::$DB->prepare("INSERT INTO " . self::table_name . " SET uuid=:uuid, user_id=:user_id, name=:name");
         $stmt->execute([
             'uuid' => $uuid,
-            'user_id' => $data['user_id'],
+            'user_id' => $userId,
             'name' => $data['name'],
         ]);
         return App::$DB->lastInsertId();
@@ -75,11 +93,11 @@ class Poll
         return true;
     }
 
-    public static function update($uuid, $user_id, $data) {
+    public static function update($uuid, $userId, $data) {
         $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name=:name WHERE uuid=:uuid AND user_id=:user_id");
         $stmt->execute([
             'uuid' => $uuid,
-            'user_id' => $user_id,
+            'user_id' => $userId,
             'name' => $data['name'],
         ]);
     }

@@ -5,11 +5,21 @@ namespace Buzzz\App;
 class App
 {
     public static $DB;
+    public static $DOCUMENT_ROOT;
     public function init()
     {
-        $settings = require_once __DIR__ . '/../../bitrix/.settings.php';
-
+       // DOCUMENT_ROOT
+        self::$DOCUMENT_ROOT = realpath(__DIR__ . '/../..');
+        // Load .env
+        $dotenv = \Dotenv\Dotenv::createImmutable(self::$DOCUMENT_ROOT);
+        $dotenv->load();
+        // Load configuration
+        $settings = require_once self::$DOCUMENT_ROOT . '/bitrix/.settings.php';
+        // Start session
+        session_start();
+        // Init database
         self::$DB = DB::init($settings['connections']['value']['default']);
+        // Init routing
         Router::init();
     }
 }
