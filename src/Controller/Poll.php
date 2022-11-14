@@ -26,8 +26,10 @@ class Poll
     public function add()
     {
         $name = Request::input('name', 'Новый опрос', 'post');
+        $type_id = Request::input('type_id', 1, 'post');
         $data = [
             'name' => $name,
+            'type_id' => $type_id
         ];
         $id = \Buzzz\Model\Poll::add(Auth::getUserId(), $data);
         $item = \Buzzz\Model\Poll::getById($id);
