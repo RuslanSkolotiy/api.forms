@@ -75,6 +75,8 @@ class Question
             'id' => $id,
             'name' => $data['name'],
             'sort' => $data['sort'],
+            'description' => $data['description'],
+            'type_id' => $data['type_id'],
             'settings' => $data['settings'],
 
         ]);
