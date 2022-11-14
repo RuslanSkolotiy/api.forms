@@ -5,9 +5,10 @@ namespace Buzzz\Model;
 use \Buzzz\App\App;
 use Ramsey\Uuid\Uuid;
 
-class Poll
+class Poll extends Model
 {
     const table_name = 'poll';
+
 
     public static function getList($userId): array
     {
@@ -93,13 +94,14 @@ class Poll
         return true;
     }
 
-    public static function update($uuid, $userId, $data) {
-        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name = :name, description = :description WHERE uuid = :uuid AND user_id = :user_id");
-        $stmt->execute([
+    public static function update($uuid, $userId, $data)
+    {
+        $values = self::prepareQueryFields($data);
+        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET $values WHERE uuid = :uuid AND user_id = :user_id");
+
+        $stmt->execute(array_merge($data, [
             'uuid' => $uuid,
             'user_id' => $userId,
-            'name' => $data['name'],
-            'description' => $data['description'],
-        ]);
+        ]));
     }
 }

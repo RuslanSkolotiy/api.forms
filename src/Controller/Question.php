@@ -6,7 +6,7 @@ use Buzzz\App\Auth;
 use Buzzz\App\Request;
 use Buzzz\App\Response;
 
-class Question {
+class Question extends Controller {
     private function getPollIdByUUID ($pollId) {
         $poll = \Buzzz\Model\Poll::getByUUID($pollId);
         if ($poll) {
@@ -63,14 +63,9 @@ class Question {
     public function update($id, $pollUUID)
     {
         $pollId = $this->getPollIdByUUID($pollUUID);
-        $data = [
-            'name' => Request::input('name', null, 'post'),
-            'sort' => Request::input('sort', null, 'post'),
-            'type_id' => Request::input('type_id', 1, 'post'),
-            'description' => Request::input('description', '', 'post'),
-            'settings' => Request::input('settings', null, 'post'),
-        ];
+        $data = self::getUpdatedFields(['name', 'sort', 'type_id', 'description', 'settings']);
         \Buzzz\Model\Question::update($pollId, $id, $data);
+        // Возврат обновленного объекта
         $item = \Buzzz\Model\Question::get($pollId, $id);
         return new Response($item, 'Елемент изменён');
     }

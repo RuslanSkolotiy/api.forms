@@ -6,7 +6,7 @@ use Buzzz\App\Auth;
 use Buzzz\App\Request;
 use Buzzz\App\Response;
 
-class Poll
+class Poll extends Controller
 {
     public function getList()
     {
@@ -46,10 +46,7 @@ class Poll
 
     public function update($uuid)
     {
-        $data = [
-            'name' => Request::input('name', '', 'post'),
-            'description' => $name = Request::input('description', '', 'post'),
-        ];
+        $data = self::getUpdatedFields(['name', 'description', 'published']);
         \Buzzz\Model\Poll::update($uuid, Auth::getUserId(), $data);
         $item = \Buzzz\Model\Poll::get($uuid, Auth::getUserId());
         return new Response($item, 'Елемент изменён');

@@ -13,8 +13,14 @@ use \Buzzz\App\Middleware\PollAccessMiddleware;
 
 class Router
 {
+    const API_VERSION = '1.0.0';
     public static function init()
     {
+        // Main page
+        SimpleRouter::get('/', function() {
+            new Response(['version' => self::API_VERSION], 'Buzzz forms service API');
+        });
+
         // Опросы
         SimpleRouter::group(['prefix' => '/api/v1/poll', 'middleware' => AuthMiddleware::class], function () {
             SimpleRouter::get('', [Poll::class, 'getList']);

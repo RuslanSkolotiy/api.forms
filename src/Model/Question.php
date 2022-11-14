@@ -6,7 +6,7 @@ use \Buzzz\App\App;
 use Buzzz\App\Auth;
 use Ramsey\Uuid\Uuid;
 
-class Question
+class Question extends Model
 {
     const table_name = 'question';
 
@@ -68,17 +68,13 @@ class Question
         return true;
     }
 
-    public static function update($pollId, $id, $data) {
-        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name=:name, sort = :sort, settings = :settings, type_id = :type_id, description = :description WHERE poll_id = :poll_id AND id=:id");
-        $stmt->execute([
+    public static function update($pollId, $id, $data)
+    {
+        $values = self::prepareQueryFields($data);
+        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET $values WHERE poll_id = :poll_id AND id=:id");
+        $stmt->execute(array_merge($data, [
             'poll_id' => $pollId,
             'id' => $id,
-            'name' => $data['name'],
-            'sort' => $data['sort'],
-            'description' => $data['description'],
-            'type_id' => $data['type_id'],
-            'settings' => $data['settings'],
-
-        ]);
+        ]));
     }
 }
