@@ -61,7 +61,9 @@ class Router
                 break;
             // Forbidden
             case 403:
-                new Response(null, 'Forbidden', 403);
+                new Response(null, 'Forbidden', 403);// Forbidden
+            case 401:
+                new Response(null, 'Not authorized', 401);
         }
     }
 }

@@ -18,7 +18,7 @@ class AuthMiddleware implements IMiddleware {
             $decoded = JWT::decode($jwt, new Key($secret_key, 'HS256'));
             Auth::setUserId($decoded->uid);
         } catch (\Exception $e) {
-            throw new \Exception("Not authorized", 403);
+            throw new \Exception("Not authorized", 401);
         }
     }
 }
