@@ -69,7 +69,7 @@ class Question
     }
 
     public static function update($pollId, $id, $data) {
-        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name=:name, sort = :sort, settings = :settings WHERE poll_id = :poll_id AND id=:id");
+        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name=:name, sort = :sort, settings = :settings, type_id = :type_id, description = :description WHERE poll_id = :poll_id AND id=:id");
         $stmt->execute([
             'poll_id' => $pollId,
             'id' => $id,
