@@ -94,11 +94,12 @@ class Poll
     }
 
     public static function update($uuid, $userId, $data) {
-        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name=:name WHERE uuid=:uuid AND user_id=:user_id");
+        $stmt = App::$DB->prepare("UPDATE " . self::table_name . " SET name = :name, description = :description WHERE uuid = :uuid AND user_id = :user_id");
         $stmt->execute([
             'uuid' => $uuid,
             'user_id' => $userId,
             'name' => $data['name'],
+            'description' => $data['description'],
         ]);
     }
 }
