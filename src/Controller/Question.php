@@ -41,8 +41,8 @@ class Question {
     {
         $pollId = $this->getPollIdByUUID($pollUUID);
         $data = [
-            'name' => Request::input('name', null, 'post'),
-            'type_id' => Request::input('type_id', null, 'post'),
+            'name' => Request::input('name', 'Новый вопрос', 'post'),
+            'type_id' => Request::input('type_id', 1, 'post'),
         ];
         $id = \Buzzz\Model\Question::add($pollId, $data);
         $item = \Buzzz\Model\Question::get($pollId, $id);

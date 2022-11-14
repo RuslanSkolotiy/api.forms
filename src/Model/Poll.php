@@ -75,12 +75,11 @@ class Poll
     public static function add($userId, $data)
     {
         $uuid = Uuid::uuid4();
-        $stmt = App::$DB->prepare("INSERT INTO " . self::table_name . " SET uuid = :uuid, user_id = :user_id, name = :name, type_id = :type_id");
+        $stmt = App::$DB->prepare("INSERT INTO " . self::table_name . " SET uuid = :uuid, user_id = :user_id, name = :name");
         $stmt->execute([
             'uuid' => $uuid,
             'user_id' => $userId,
             'name' => $data['name'],
-            'type_id' => $data['type_id'],
         ]);
         return App::$DB->lastInsertId();
     }
