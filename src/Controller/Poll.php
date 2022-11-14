@@ -46,9 +46,9 @@ class Poll
 
     public function update($uuid)
     {
-        $name = Request::input('name', null, 'post');
         $data = [
-            'name' => $name
+            'name' => Request::input('name', '', 'post'),
+            'description' => $name = Request::input('description', '', 'post'),
         ];
         \Buzzz\Model\Poll::update($uuid, Auth::getUserId(), $data);
         $item = \Buzzz\Model\Poll::get($uuid, Auth::getUserId());
