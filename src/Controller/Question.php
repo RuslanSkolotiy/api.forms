@@ -66,6 +66,8 @@ class Question {
         $data = [
             'name' => Request::input('name', null, 'post'),
             'sort' => Request::input('sort', null, 'post'),
+            'type_id' => Request::input('type_id', 1, 'post'),
+            'description' => Request::input('description', '', 'post'),
             'settings' => Request::input('settings', null, 'post'),
         ];
         \Buzzz\Model\Question::update($pollId, $id, $data);
