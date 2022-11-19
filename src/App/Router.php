@@ -60,16 +60,20 @@ class Router
 
     public static function onError(Request $request, \Exception $exception)
     {
+        // TODO добавить логирование
         switch ($exception->getCode()) {
-            // Page not found
             case 404:
                 new Response(null, 'Page not found', 404);
                 break;
-            // Forbidden
             case 403:
-                new Response(null, 'Forbidden', 403);// Forbidden
+                new Response(null, 'Forbidden', 403);
+                break;
             case 401:
                 new Response(null, 'Not authorized', 401);
+                break;
+            default:
+                new Response(null, 'Unknown Error', 520);
+                break;
         }
     }
 }
